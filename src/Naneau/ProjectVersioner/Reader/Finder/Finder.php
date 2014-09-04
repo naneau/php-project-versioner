@@ -6,7 +6,7 @@
  * @subpackage      Reader
  */
 
-namespace Naneau\ProjectVersioner\Reader;
+namespace Naneau\ProjectVersioner\Reader\Finder;
 
 use Naneau\ProjectVersioner\ReaderInterface;
 
@@ -15,13 +15,13 @@ use Symfony\Component\Finder\Finder as SfFinder;
 /**
  * Finder
  *
- * Uses the highest mtime from a finder as a version
+ * Base class for finder based readers
  *
  * @category        Naneau
  * @package         ProjectVersioner
  * @subpackage      Reader
  */
-class Finder implements ReaderInterface
+abstract class Finder implements ReaderInterface
 {
     /**
      * the finder
@@ -50,33 +50,15 @@ class Finder implements ReaderInterface
      **/
     public function canRead($directory)
     {
+        // Update finder directory
         $this->getFinder()->in($directory);
 
         // If at least one file/dir can be found, assume we can read
-        foreach($this->getFinder() as $file) {
+        foreach ($this->getFinder() as $file) {
             return true;
         }
+
         return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     **/
-    public function read($directory)
-    {
-        $highest = 0;
-        foreach($this->getFinder() as $file) {
-
-            $mtime = filemtime(
-                $file->getPath()
-                . DIRECTORY_SEPARATOR . $file->getFilename()
-            );
-            if ($mtime > $highest) {
-                $highest = $mtime;
-            }
-        }
-
-        return $highest;
     }
 
     /**
@@ -92,8 +74,8 @@ class Finder implements ReaderInterface
     /**
      * Set the finder
      *
-     * @param SfFinder $finder
-     * @return Finder
+     * @param  SfFinder $finder
+     * @return SfFinder
      */
     public function setFinder(SfFinder $finder)
     {
