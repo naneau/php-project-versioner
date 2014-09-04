@@ -33,15 +33,23 @@ abstract class Finder implements ReaderInterface
     /**
      * Constructor
      *
+     * @param  string   $name   limiting names
      * @param  SfFinder $finder
      * @return void
      **/
-    public function __construct(SfFinder $finder = null)
+    public function __construct($name = null, SfFinder $finder = null)
     {
+        // Create finder if not given
         if ($finder === null) {
             $finder = new SfFinder;
         }
 
+        // Set name if given
+        if (!empty($name)) {
+            $finder->name($name);
+        }
+
+        // Set the finder
         $this->setFinder($finder);
     }
 
