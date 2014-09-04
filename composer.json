@@ -1,0 +1,21 @@
+{
+    "name": "naneau/project-versioner",
+    "description": "A tool to maintain project/sub-project versions based on Composer, file mtimes, etc.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maurice Fonk",
+            "email": "maurice@naneau.net"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {"Naneau\\ProjectVersioner\\": "src/Naneau/ProjectVersioner/"}
+    },
+
+    "minimum-stability": "stable",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "~4.2"
+    }
+}
