@@ -16,9 +16,14 @@ class CombineReadersTest extends \PHPUnit_Framework_TestCase
             new FileReader('VERSION')
         );
 
-        $versioner = new Versioner(__DIR__ . '/../projects/composer-file/', $readers);
+        $versioner = new Versioner($readers);
 
-        return $this->assertEquals('v2.5.4', $versioner->get());
+        return $this->assertEquals(
+            'v2.5.4',
+            $versioner->get(
+                __DIR__ . '/../projects/composer-file/'
+            )
+        );
     }
 
     public function testFileFirst()
@@ -29,8 +34,13 @@ class CombineReadersTest extends \PHPUnit_Framework_TestCase
             new ComposerReader('VERSION')
         );
 
-        $versioner = new Versioner(__DIR__ . '/../projects/composer-file/', $readers);
+        $versioner = new Versioner($readers);
 
-        return $this->assertEquals('5.4.3', $versioner->get());
+        return $this->assertEquals(
+            '5.4.3',
+            $versioner->get(
+                __DIR__ . '/../projects/composer-file/'
+            )
+        );
     }
 }

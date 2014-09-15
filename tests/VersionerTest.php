@@ -1,6 +1,7 @@
 <?php
 
 use Naneau\ProjectVersioner\Versioner;
+use Naneau\ProjectVersioner\Reader\Finder\MTime as MTimeReader;
 
 class VersionerTest extends \PHPUnit_Framework_TestCase
 {
@@ -9,7 +10,8 @@ class VersionerTest extends \PHPUnit_Framework_TestCase
      **/
     public function testNoDir()
     {
-        $versioner = new Versioner('foo');
+        $versioner = new Versioner(array(new MTimeReader('*.txt')));
+        $versioner->get('foo');
     }
 
     /**
@@ -17,8 +19,8 @@ class VersionerTest extends \PHPUnit_Framework_TestCase
      **/
     public function testNoReaders()
     {
-        $versioner = new Versioner(__DIR__ . '/projects/file');
+        $versioner = new Versioner();
 
-        $versioner->get();
+        $versioner->get('foo');
     }
 }

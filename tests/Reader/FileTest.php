@@ -11,8 +11,8 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         $readers = array(new FileReader('VERSION'));
 
-        $versioner = new Versioner($directory, $readers);
+        $versioner = new Versioner($readers);
 
-        $this->assertEquals('5.4.3', $versioner->get());
+        $this->assertEquals('5.4.3', $versioner->get($directory));
     }
 }

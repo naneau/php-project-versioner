@@ -12,9 +12,9 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
 
         $readers = array(new ComposerReader);
 
-        $versioner = new Versioner($directory, $readers);
+        $versioner = new Versioner($readers);
 
-        $this->assertEquals('aa1f22', $versioner->get());
+        $this->assertEquals('aa1f22', $versioner->get($directory));
     }
 
     public function testPackageRead()
@@ -23,8 +23,8 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
 
         $readers = array(new ComposerPackageReader('symfony/filesystem'));
 
-        $versioner = new Versioner($directory, $readers);
+        $versioner = new Versioner($readers);
 
-        $this->assertEquals('v2.5.4', $versioner->get());
+        $this->assertEquals('v2.5.4', $versioner->get($directory));
     }
 }

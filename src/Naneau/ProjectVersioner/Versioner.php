@@ -16,7 +16,7 @@ use \InvalidArgumentException;
 /**
  * Versioner
  *
- * Fetches the version for a directory
+ * Uses a set of readers to fetch versions from directories
  *
  * @category        Naneau
  * @package         ProjectVersioner
@@ -24,13 +24,6 @@ use \InvalidArgumentException;
  */
 class Versioner
 {
-    /**
-     * Directory
-     *
-     * @var string
-     **/
-    private $directory;
-
     /**
      * The readers
      *
@@ -41,60 +34,32 @@ class Versioner
     /**
      * Constructor
      *
-     * @param  string   $directory
      * @param  Reader[] $readers
      * @return void
      **/
-    public function __construct($directory, array $readers = array())
+    public function __construct(array $readers = array())
     {
-        $this
-            ->setDirectory($directory)
-            ->setReaders($readers);
+        $this->setReaders($readers);
     }
 
-    public function get()
+    /**
+     * Get the version for a directory
+     *
+     * @param string $directory
+     * @return string
+     **/
+    public function get($directory)
     {
         foreach ($this->getReaders() as $reader) {
-            if ($reader->canRead($this->getDirectory())) {
-                return $reader->read($this->getDirectory());
+            if ($reader->canRead($directory)) {
+                return $reader->read($directory);
             }
         }
 
         throw new RuntimeException(sprintf(
             'Can not read version from directory "%s"',
-            $this->getDirectory()
+            $directory
         ));
-    }
-
-    /**
-     * Get the directory
-     *
-     * @return string
-     */
-    public function getDirectory()
-    {
-        return $this->directory;
-    }
-
-    /**
-     * Set the directory
-     *
-     * @param  string $directory
-     * @return parent
-     */
-    public function setDirectory($directory)
-    {
-        // Make sure we get a real directory
-        if (!is_dir($directory)) {
-            throw new InvalidArgumentException(sprintf(
-                '"%s" is not a directory',
-                $directory
-            ));
-        }
-
-        $this->directory = $directory;
-
-        return $this;
     }
 
     /**

@@ -19,12 +19,9 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
         $versionOutput = self::execInDir(array('git rev-parse --short head'));
         $version = $versionOutput[0];
 
-        $versioner = new Versioner(
-            self::getDirectory(),
-            array(new GitCommitExecReader)
-        );
+        $versioner = new Versioner(array(new GitCommitExecReader));
 
-        $this->assertEquals($version, $versioner->get());
+        $this->assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
     /**
@@ -37,12 +34,9 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
         $versionOutput = self::execInDir(array('git rev-parse head'));
         $version = $versionOutput[0];
 
-        $versioner = new Versioner(
-            self::getDirectory(),
-            array(new GitCommitExecReader(false))
-        );
+        $versioner = new Versioner(array(new GitCommitExecReader(false)));
 
-        $this->assertEquals($version, $versioner->get());
+        $this->assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
     /**
@@ -55,22 +49,15 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
         $versionOutput = self::execInDir(array('git describe'));
         $version = $versionOutput[0];
 
-        $versioner = new Versioner(
-            self::getDirectory(),
-            array(new GitDescribeExecReader)
-        );
+        $versioner = new Versioner(array(new GitDescribeExecReader));
 
-        $this->assertEquals($version, $versioner->get());
+        $this->assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
     public function testTagRead()
     {
-        $versioner = new Versioner(
-            self::getDirectory(),
-            array(new GitTagExecReader)
-        );
-
-        $this->assertEquals('0.0.2', $versioner->get());
+        $versioner = new Versioner(array(new GitTagExecReader));
+        $this->assertEquals('0.0.2', $versioner->get(self::getDirectory()));
     }
 
     /**

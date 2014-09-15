@@ -12,43 +12,39 @@ class FinderTest extends \PHPUnit_Framework_TestCase
     {
         $directory = __DIR__ . '/../projects/finder';
 
-        $versioner = new Versioner(
-            $directory,
-            array(new MTimeReader('*.txt'))
-        );
+        $versioner = new Versioner(array(new MTimeReader('*.txt')));
 
         // Set the time to now for one  of the files
         $time = time();
         touch($directory . '/DirectoryOne/FileFour.txt', $time);
 
-        $this->assertEquals($time, $versioner->get());
+        $this->assertEquals($time, $versioner->get($directory));
     }
 
     public function testContents()
     {
-        $versioner = new Versioner(
-            __DIR__ . '/../projects/finder',
-            array(new ContentsReader('*.php'))
-        );
+        $versioner = new Versioner(array(new ContentsReader('*.php')));
 
         $hash = 'ee53e4';
-        $this->assertEquals($hash, $versioner->get());
+        $this->assertEquals(
+            $hash,
+            $versioner->get(
+                __DIR__ . '/../projects/finder'
+            )
+        );
     }
 
     public function testEmptyNames()
     {
         $directory = __DIR__ . '/../projects/finder';
 
-        $versioner = new Versioner(
-            $directory,
-            array(new MTimeReader())
-        );
+        $versioner = new Versioner(array(new MTimeReader()));
 
         // Set the time to now for one  of the files
         $time = time();
         touch($directory . '/DirectoryOne/FileFour.txt', $time);
 
-        $this->assertEquals($time, $versioner->get());
+        $this->assertEquals($time, $versioner->get($directory));
     }
 
     public function testEmptyNamesWithFinder()
@@ -57,17 +53,11 @@ class FinderTest extends \PHPUnit_Framework_TestCase
 
         $finderTxt = new Finder;
         $finderTxt->name('*.txt');
-        $versionerTxt = new Versioner(
-            $directory,
-            array(new MTimeReader(null, $finderTxt))
-        );
+        $versionerTxt = new Versioner(array(new MTimeReader(null, $finderTxt)));
 
         $finderPhp = new Finder;
         $finderPhp->name('*.php');
-        $versionerPhp = new Versioner(
-            $directory,
-            array(new MTimeReader(null, $finderPhp))
-        );
+        $versionerPhp = new Versioner(array(new MTimeReader(null, $finderPhp)));
 
         $timeThree = time();
         $timeFour = $timeThree - 10;
@@ -75,8 +65,8 @@ class FinderTest extends \PHPUnit_Framework_TestCase
         touch($directory . '/DirectoryOne/FileThree.php', $timeThree);
         touch($directory . '/DirectoryOne/FileFour.txt', $timeFour);
 
-        $this->assertEquals($timeThree, $versionerPhp->get());
-        $this->assertEquals($timeFour, $versionerTxt->get());
+        $this->assertEquals($timeThree, $versionerPhp->get($directory));
+        $this->assertEquals($timeFour, $versionerTxt->get($directory));
     }
 
     public function testNamesAndFinder()
@@ -85,10 +75,7 @@ class FinderTest extends \PHPUnit_Framework_TestCase
 
         $finder = new Finder;
         $finder->name('*.txt');
-        $versioner = new Versioner(
-            $directory,
-            array(new MTimeReader('*.php', $finder))
-        );
+        $versioner = new Versioner(array(new MTimeReader('*.php', $finder)));
 
         $timeThree = time();
         $timeFour = $timeThree - 10;
@@ -96,6 +83,6 @@ class FinderTest extends \PHPUnit_Framework_TestCase
         touch($directory . '/DirectoryOne/FileThree.php', $timeThree);
         touch($directory . '/DirectoryOne/FileFour.txt', $timeFour);
 
-        $this->assertEquals($timeThree, $versioner->get());
+        $this->assertEquals($timeThree, $versioner->get($directory));
     }
 }
