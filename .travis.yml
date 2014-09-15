@@ -6,5 +6,8 @@ php:
     - hhvm
 
 # Install deps
+before_install:
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq git-core
 install:
     - composer install
