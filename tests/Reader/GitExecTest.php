@@ -16,7 +16,7 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
      **/
     public function testShortCommitRead()
     {
-        $versionOutput = self::execInDir(array('git rev-parse --short head'));
+        $versionOutput = self::execInDir(array('git rev-parse --short HEAD'));
         $version = $versionOutput[0];
 
         $versioner = new Versioner(array(new GitCommitExecReader));
@@ -31,7 +31,7 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
      **/
     public function testLongCommitRead()
     {
-        $versionOutput = self::execInDir(array('git rev-parse head'));
+        $versionOutput = self::execInDir(array('git rev-parse HEAD'));
         $version = $versionOutput[0];
 
         $versioner = new Versioner(array(new GitCommitExecReader(false)));

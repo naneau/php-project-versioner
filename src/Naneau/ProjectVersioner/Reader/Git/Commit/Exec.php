@@ -74,12 +74,12 @@ class Exec extends GitExec
     {
         if ($this->getShort()) {
             return sprintf(
-                'cd %s && git rev-parse --short head',
+                'cd %s && git rev-parse --short HEAD',
                 escapeshellarg($directory)
             );
         } else {
             return sprintf(
-                'cd %s && git rev-parse head',
+                'cd %s && git rev-parse HEAD',
                 escapeshellarg($directory)
             );
         }
