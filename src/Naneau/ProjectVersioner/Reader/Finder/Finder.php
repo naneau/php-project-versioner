@@ -49,6 +49,9 @@ abstract class Finder implements ReaderInterface
             $finder->name($name);
         }
 
+        // Sort by name
+        $finder->sortByName();
+
         // Set the finder
         $this->setFinder($finder);
     }
