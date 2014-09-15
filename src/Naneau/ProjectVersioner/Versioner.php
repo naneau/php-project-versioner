@@ -11,7 +11,6 @@ namespace Naneau\ProjectVersioner;
 use Naneau\ProjectVersioner\ReaderInterface as Reader;
 
 use \RuntimeException;
-use \InvalidArgumentException;
 
 /**
  * Versioner
@@ -45,7 +44,7 @@ class Versioner
     /**
      * Get the version for a directory
      *
-     * @param string $directory
+     * @param  string $directory
      * @return string
      **/
     public function get($directory)
@@ -60,6 +59,37 @@ class Versioner
             'Can not read version from directory "%s"',
             $directory
         ));
+    }
+
+    /**
+     * Get the version for a directory
+     *
+     * Combining the output of all writers using the given separator
+     *
+     * Version will be considered "found" if at least one versioner returns
+     * output.
+     *
+     * @param  string $directory
+     * @param  string $separator
+     * @return string
+     **/
+    public function getCombined($directory, $separator = '-')
+    {
+        $found = array();
+        foreach ($this->getReaders() as $reader) {
+            if ($reader->canRead($directory)) {
+                $found[] = $reader->read($directory);
+            }
+        }
+
+        if (count($found) === 0) {
+            throw new RuntimeException(sprintf(
+                'Can not read version from directory "%s"',
+                $directory
+            ));
+        }
+
+        return implode($separator, $found);
     }
 
     /**
