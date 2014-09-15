@@ -25,9 +25,8 @@ class FinderTest extends \PHPUnit_Framework_TestCase
     {
         $versioner = new Versioner(array(new ContentsReader('*.php')));
 
-        $hash = 'ee53e4';
         $this->assertEquals(
-            $hash,
+            'db9d80',
             $versioner->get(
                 __DIR__ . '/../projects/finder'
             )

@@ -24,20 +24,18 @@ class Contents extends Finder
      **/
     public function read($directory)
     {
-        $contents = '';
+        $hash = '';
         foreach ($this->getFinder() as $file) {
-            var_dump($file);
 
-            $fileContents = file_get_contents(
-                $file->getPath()
-                . DIRECTORY_SEPARATOR . $file->getFilename()
+            // MD5 hash of the file
+            $fileHash = md5_file(
+                $file->getPath() . DIRECTORY_SEPARATOR . $file->getFilename()
             );
 
-            var_dump($contents, $fileContents);
-
-            $contents = md5($contents . $fileContents);
+            // Mix into result hash
+            $hash = md5($hash . $fileHash);
         }
 
-        return substr($contents, 0, 6);
+        return substr($hash, 0, 6);
     }
 }
