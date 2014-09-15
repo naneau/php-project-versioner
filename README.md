@@ -1,5 +1,6 @@
 # PHP Project Versioner
 
+[![Latest Stable Version](https://poser.pugx.org/naneau/project-versioner/v/stable.svg)](https://packagist.org/packages/naneau/project-versioner)
 [![Build Status](https://travis-ci.org/naneau/php-project-versioner.svg?branch=master)](https://travis-ci.org/naneau/php-project-versioner)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/naneau/php-project-versioner/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/naneau/php-project-versioner/?branch=master)
 
