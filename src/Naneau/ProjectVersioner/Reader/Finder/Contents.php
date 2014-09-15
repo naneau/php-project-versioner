@@ -33,6 +33,8 @@ class Contents extends Finder
                 . DIRECTORY_SEPARATOR . $file->getFilename()
             );
 
+            var_dump($contents, $fileContents);
+
             $contents = md5($contents . $fileContents);
         }
 
