@@ -10,8 +10,6 @@ namespace Naneau\ProjectVersioner\Reader\Git\Describe;
 
 use Naneau\ProjectVersioner\Reader\Git\Exec as GitExec;
 
-use Naneau\ProjectVersioner\ReaderInterface;
-
 /**
  * Exec
  *
@@ -29,11 +27,10 @@ use Naneau\ProjectVersioner\ReaderInterface;
  */
 class Exec extends GitExec
 {
-
     /**
      * Get command for directory
      *
-     * @param string $directory
+     * @param  string $directory
      * @return string
      **/
     protected function getCommandForDirectory($directory)

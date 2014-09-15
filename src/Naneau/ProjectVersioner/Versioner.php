@@ -41,8 +41,8 @@ class Versioner
     /**
      * Constructor
      *
-     * @param string $directory
-     * @param Reader[] $readers
+     * @param  string   $directory
+     * @param  Reader[] $readers
      * @return void
      **/
     public function __construct($directory, array $readers = array())
@@ -54,7 +54,7 @@ class Versioner
 
     public function get()
     {
-        foreach($this->getReaders() as $reader) {
+        foreach ($this->getReaders() as $reader) {
             if ($reader->canRead($this->getDirectory())) {
                 return $reader->read($this->getDirectory());
             }
@@ -79,7 +79,7 @@ class Versioner
     /**
      * Set the directory
      *
-     * @param string $directory
+     * @param  string $directory
      * @return parent
      */
     public function setDirectory($directory)
@@ -110,7 +110,7 @@ class Versioner
     /**
      * Set the set of readers
      *
-     * @param Reader[] $readers
+     * @param  Reader[]  $readers
      * @return Versioner
      */
     public function setReaders(array $readers)
@@ -123,7 +123,7 @@ class Versioner
     /**
      * Add a reader
      *
-     * @param Reader[] $readers
+     * @param  Reader[]  $readers
      * @return Versioner
      */
     public function addReaders()

@@ -45,7 +45,7 @@ abstract class Exec implements ReaderInterface
     /**
      * Get the command for a directory
      *
-     * @param string $directory
+     * @param  string $directory
      * @return string
      **/
     abstract protected function getCommandForDirectory($directory);
@@ -53,8 +53,8 @@ abstract class Exec implements ReaderInterface
     /**
      * Can a git command be executed?
      *
-     * @param string $command
-     * @param string $directory
+     * @param  string $command
+     * @param  string $directory
      * @return void
      **/
     private function canExec($command, $directory)
@@ -81,7 +81,7 @@ abstract class Exec implements ReaderInterface
     /**
      * Execute a git command and return first line of output
      *
-     * @param string $command
+     * @param  string $command
      * @return string
      **/
     private function exec($command)

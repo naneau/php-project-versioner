@@ -8,8 +8,6 @@
 
 namespace Naneau\ProjectVersioner\Reader\Finder;
 
-use Naneau\ProjectVersioner\Reader\Finder\Finder;
-
 /**
  * Contents
  *
