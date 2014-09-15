@@ -3,6 +3,7 @@
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Git\Commit\Exec as GitCommitExecReader;
 use Naneau\ProjectVersioner\Reader\Git\Describe\Exec as GitDescribeExecReader;
+use Naneau\ProjectVersioner\Reader\Git\Tag\Exec as GitTagExecReader;
 
 use \RuntimeException;
 
@@ -60,6 +61,16 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($version, $versioner->get());
+    }
+
+    public function testTagRead()
+    {
+        $versioner = new Versioner(
+            self::getDirectory(),
+            array(new GitTagExecReader)
+        );
+
+        $this->assertEquals('0.0.2', $versioner->get());
     }
 
     /**
