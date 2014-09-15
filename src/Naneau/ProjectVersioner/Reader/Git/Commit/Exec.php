@@ -8,74 +8,80 @@
 
 namespace Naneau\ProjectVersioner\Reader\Git\Commit;
 
-use Naneau\ProjectVersioner\ReaderInterface;
+use Naneau\ProjectVersioner\Reader\Git\Exec as GitExec;
 
 /**
  * Exec
  *
- * Read version from git using exec
+ * Reads the latest commit (short) hash from a git repository
+ *
+ * Example: gd504031
  *
  * @category        Naneau
  * @package         ProjectVersioner
  * @subpackage      Reader
  */
-class Exec implements ReaderInterface
+class Exec extends GitExec
 {
     /**
-     * {@inheritDoc}
+     * Use short hash?
+     *
+     * @var bool
      **/
-    public function canRead($directory)
+    private $short = true;
+
+    /**
+     * Constructor
+     *
+     * @param  bool $short
+     * @return void
+     **/
+    public function __construct($short = true)
     {
-        // We rely on exec, so it needs to exist
-        if (!function_exists('exec')) {
-            return false;
-        }
-
-        // (Cheap) check for git directory
-        if (!is_dir($directory . '/.git')) {
-            return false;
-        }
-
-        // Try to get version
-        $output = array();
-        $return = 0;
-        @exec(self::getCommandForDirectory($directory), $output, $return);
-
-        return $return === 0;
+        $this->setShort($short);
     }
 
     /**
-     * {@inheritDoc}
-     **/
-    public function read($directory)
+     * Get use short commit hash?
+     *
+     * @return bool
+     */
+    public function getShort()
     {
-        $output = array();
-        $return = 0;
+        return $this->short;
+    }
 
-        // Try to find last commit hash
-        @exec(self::getCommandForDirectory($directory), $output, $return);
+    /**
+     * Set use short commit hash?
+     *
+     * @param  bool $short
+     * @return Exec
+     */
+    public function setShort($short)
+    {
+        $this->short = $short;
 
-        // Make sure it worked
-        if ($return !== 0) {
-            throw new RuntimeException('Can not parse version from git');
-        }
-
-        // Return hash with "git#" prefixed for clarity
-        return implode('#', $output);
-
+        return $this;
     }
 
     /**
      * Get command for directory
      *
-     * @param string $directory
+     * @param  string $directory
      * @return string
      **/
-    private static function getCommandForDirectory($directory)
+    protected function getCommandForDirectory($directory)
     {
-        return sprintf(
-            'cd %s && git rev-parse --short head',
-            escapeshellarg($directory)
-        );
+        if ($this->getShort()) {
+            return sprintf(
+                'cd %s && git rev-parse --short head',
+                escapeshellarg($directory)
+            );
+        } else {
+            return sprintf(
+                'cd %s && git rev-parse head',
+                escapeshellarg($directory)
+            );
+        }
     }
 }
