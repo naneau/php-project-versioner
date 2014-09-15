@@ -9,5 +9,7 @@ php:
 before_install:
     - sudo apt-get update -qq
     - sudo apt-get install -qq git-core
+    - git config --global user.email "ci@naneau.net"
+    - git config --global user.name "Travis"
 install:
     - composer install
