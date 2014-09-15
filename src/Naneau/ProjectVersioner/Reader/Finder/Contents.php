@@ -26,6 +26,7 @@ class Contents extends Finder
     {
         $contents = '';
         foreach ($this->getFinder() as $file) {
+            var_dump($file);
 
             $fileContents = file_get_contents(
                 $file->getPath()
