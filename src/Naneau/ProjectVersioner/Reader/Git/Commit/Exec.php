@@ -6,7 +6,7 @@
  * @subpackage      Reader
  */
 
-namespace Naneau\ProjectVersioner\Reader\Git;
+namespace Naneau\ProjectVersioner\Reader\Git\Commit;
 
 use Naneau\ProjectVersioner\ReaderInterface;
 

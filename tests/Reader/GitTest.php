@@ -1,7 +1,7 @@
 <?php
 
 use Naneau\ProjectVersioner\Versioner;
-use Naneau\ProjectVersioner\Reader\Git\Exec as ExecGitReader;
+use Naneau\ProjectVersioner\Reader\Git\Commit\Exec as GitCommitExecReader;
 
 use \RuntimeException;
 
@@ -13,7 +13,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
 
         $version = $this->initGit($directory);
 
-        $versioner = new Versioner($directory, array(new ExecGitReader));
+        $versioner = new Versioner($directory, array(new GitCommitExecReader));
 
         $this->assertEquals($version, $versioner->get());
     }
