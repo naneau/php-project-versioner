@@ -118,12 +118,12 @@ class Versioner
     /**
      * Add a reader
      *
-     * @param  Reader[]  $readers
+     * @param  Reader[]  $reader
      * @return Versioner
      */
-    public function addReaders()
+    public function addReader(Reader $reader)
     {
-        $this->readers[] = $readers;
+        $this->readers[] = $reader;
 
         return $this;
     }

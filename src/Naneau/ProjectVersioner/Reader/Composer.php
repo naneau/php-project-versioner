@@ -8,6 +8,8 @@
 
 namespace Naneau\ProjectVersioner\Reader;
 
+use Naneau\ProjectVersioner\ReaderInterface;
+
 /**
  * Composer
  *
@@ -17,7 +19,7 @@ namespace Naneau\ProjectVersioner\Reader;
  * @package         ProjectVersioner
  * @subpackage      Reader
  */
-class Composer
+class Composer implements ReaderInterface
 {
     /**
      * {@inheritdoc}
