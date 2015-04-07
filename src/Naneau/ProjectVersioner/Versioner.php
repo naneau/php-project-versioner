@@ -93,6 +93,23 @@ class Versioner
     }
 
     /**
+     * Does a directory have a version?
+     *
+     * @param string $directory
+     * @return bool
+     **/
+    public function has($directory)
+    {
+        foreach ($this->getReaders() as $reader) {
+            if ($reader->canRead($directory)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Get the set of readers
      *
      * @return Reader[]
