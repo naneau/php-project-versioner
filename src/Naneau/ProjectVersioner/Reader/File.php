@@ -44,7 +44,7 @@ class File implements ReaderInterface
      **/
     public function canRead($directory)
     {
-        return is_readable($directory . '/' . $this->getFile());
+        return is_readable($directory . DIRECTORY_SEPARATOR . $this->getFile());
     }
 
     /**
@@ -52,7 +52,7 @@ class File implements ReaderInterface
      **/
     public function read($directory)
     {
-        return trim(file_get_contents($directory . '/' . $this->getFile()));
+        return trim(file_get_contents($directory . DIRECTORY_SEPARATOR . $this->getFile()));
     }
 
     /**

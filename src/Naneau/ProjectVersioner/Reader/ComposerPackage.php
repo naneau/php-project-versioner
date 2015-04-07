@@ -8,6 +8,8 @@
 
 namespace Naneau\ProjectVersioner\Reader;
 
+use Naneau\ProjectVersioner\ReaderInterface;
+
 /**
  * ComposerPackage
  *
@@ -17,7 +19,7 @@ namespace Naneau\ProjectVersioner\Reader;
  * @package         ProjectVersioner
  * @subpackage      Reader
  */
-class ComposerPackage
+class ComposerPackage implements ReaderInterface
 {
     /**
      * The page name to look for
