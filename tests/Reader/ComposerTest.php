@@ -3,6 +3,7 @@
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Composer as ComposerReader;
 use Naneau\ProjectVersioner\Reader\ComposerPackage as ComposerPackageReader;
+use Naneau\ProjectVersioner\Reader\ComposerJson as ComposerJsonReader;
 
 class ComposerTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,5 +27,15 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
         $versioner = new Versioner($readers);
 
         $this->assertEquals('v2.5.4', $versioner->get($directory));
+    }
+
+    public function testComposerJsonRead()
+    {
+        $directory = __DIR__ . '/../projects/composer';
+
+        $readers = array(new ComposerJsonReader);
+        $versioner = new Versioner($readers);
+
+        $this->assertEquals('1.0.0', $versioner->get($directory));
     }
 }

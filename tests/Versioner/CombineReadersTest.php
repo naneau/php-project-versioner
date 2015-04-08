@@ -79,4 +79,25 @@ class CombineReadersTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testHasAVersion()
+    {
+        $versioner = new Versioner;
+
+        // This one should have a version
+        $versioner->setReaders(
+            array(new FileReader('VERSION'))
+        );
+        return $this->assertTrue(
+            $versioner->has(__DIR__ . '/../projects/composer-file/')
+        );
+
+        // Should not have a version
+        $versioner->setReaders(
+            array(new FileReader('FOO'))
+        );
+        return $this->assertFalse(
+            $versioner->has(__DIR__ . '/../projects/composer-file/')
+        );
+    }
 }
