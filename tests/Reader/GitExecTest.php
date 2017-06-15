@@ -5,8 +5,6 @@ use Naneau\ProjectVersioner\Reader\Git\Commit\Exec as GitCommitExecReader;
 use Naneau\ProjectVersioner\Reader\Git\Describe\Exec as GitDescribeExecReader;
 use Naneau\ProjectVersioner\Reader\Git\Tag\Exec as GitTagExecReader;
 
-use \RuntimeException;
-
 class GitExecTest extends \PHPUnit_Framework_TestCase
 {
     /**
