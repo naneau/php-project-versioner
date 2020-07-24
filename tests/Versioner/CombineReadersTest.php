@@ -6,19 +6,19 @@ use Naneau\ProjectVersioner\Reader\Composer as ComposerReader;
 use Naneau\ProjectVersioner\Reader\ComposerPackage as ComposerPackageReader;
 
 
-class CombineReadersTest extends \PHPUnit_Framework_TestCase
+class CombineReadersTest extends \PHPUnit\Framework\TestCase
 {
     public function testComposerFirst()
     {
         $readers = array(
             new ComposerPackageReader('symfony/filesystem'),
-            new ComposerReader('VERSION'),
+            new ComposerReader(),
             new FileReader('VERSION')
         );
 
         $versioner = new Versioner($readers);
 
-        return $this->assertEquals(
+        self::assertEquals(
             'v2.5.4',
             $versioner->get(
                 __DIR__ . '/../projects/composer-file/'
@@ -31,12 +31,12 @@ class CombineReadersTest extends \PHPUnit_Framework_TestCase
         $readers = array(
             new FileReader('VERSION'),
             new ComposerPackageReader('symfony/filesystem'),
-            new ComposerReader('VERSION')
+            new ComposerReader()
         );
 
         $versioner = new Versioner($readers);
 
-        return $this->assertEquals(
+        self::assertEquals(
             '5.4.3',
             $versioner->get(
                 __DIR__ . '/../projects/composer-file/'
@@ -48,13 +48,13 @@ class CombineReadersTest extends \PHPUnit_Framework_TestCase
     {
         $readers = array(
             new ComposerPackageReader('symfony/filesystem'),
-            new ComposerReader('VERSION'),
+            new ComposerReader(),
             new FileReader('VERSION')
         );
 
         $versioner = new Versioner($readers);
 
-        return $this->assertEquals(
+        self::assertEquals(
             'v2.5.4_aa1f22_5.4.3',
             $versioner->getCombined(
                 __DIR__ . '/../projects/composer-file/',
@@ -68,11 +68,11 @@ class CombineReadersTest extends \PHPUnit_Framework_TestCase
         $readers = array(
             new FileReader('VERSION'),
             new ComposerPackageReader('symfony/filesystem'),
-            new ComposerReader('VERSION')
+            new ComposerReader()
         );
         $versioner = new Versioner($readers);
 
-        return $this->assertEquals(
+        self::assertEquals(
             '5.4.3-v2.5.4-aa1f22',
             $versioner->getCombined(
                 __DIR__ . '/../projects/composer-file/'
@@ -88,7 +88,7 @@ class CombineReadersTest extends \PHPUnit_Framework_TestCase
         $versioner->setReaders(
             array(new FileReader('VERSION'))
         );
-        return $this->assertTrue(
+        self::assertTrue(
             $versioner->has(__DIR__ . '/../projects/composer-file/')
         );
 
@@ -96,7 +96,7 @@ class CombineReadersTest extends \PHPUnit_Framework_TestCase
         $versioner->setReaders(
             array(new FileReader('FOO'))
         );
-        return $this->assertFalse(
+        self::assertFalse(
             $versioner->has(__DIR__ . '/../projects/composer-file/')
         );
     }

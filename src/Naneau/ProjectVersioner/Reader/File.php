@@ -69,7 +69,7 @@ class File implements ReaderInterface
      * Set the file
      *
      * @param  string $file
-     * @return parent
+     * @return self
      */
     public function setFile($file)
     {

@@ -5,7 +5,7 @@ use Naneau\ProjectVersioner\Reader\Git\Commit\Exec as GitCommitExecReader;
 use Naneau\ProjectVersioner\Reader\Git\Describe\Exec as GitDescribeExecReader;
 use Naneau\ProjectVersioner\Reader\Git\Tag\Exec as GitTagExecReader;
 
-class GitExecTest extends \PHPUnit_Framework_TestCase
+class GitExecTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test reading of latest commit
@@ -19,7 +19,7 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
 
         $versioner = new Versioner(array(new GitCommitExecReader));
 
-        $this->assertEquals($version, $versioner->get(self::getDirectory()));
+        self::assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
     /**
@@ -34,7 +34,7 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
 
         $versioner = new Versioner(array(new GitCommitExecReader(false)));
 
-        $this->assertEquals($version, $versioner->get(self::getDirectory()));
+        self::assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
     /**
@@ -49,13 +49,13 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
 
         $versioner = new Versioner(array(new GitDescribeExecReader));
 
-        $this->assertEquals($version, $versioner->get(self::getDirectory()));
+        self::assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
     public function testTagRead()
     {
         $versioner = new Versioner(array(new GitTagExecReader));
-        $this->assertEquals('0.0.2', $versioner->get(self::getDirectory()));
+        self::assertEquals('0.0.2', $versioner->get(self::getDirectory()));
     }
 
     /**
@@ -63,7 +63,7 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      **/
-    public function setUp()
+    public function setUp(): void
     {
         self::execWithDir(array('rm -rf %s', 'mkdir %s'));
         self::execInDir(array(
@@ -94,7 +94,7 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      **/
-    public function tearDown()
+    public function tearDown(): void
     {
         self::execWithDir(array('rm -rf %s'));
     }
@@ -102,7 +102,7 @@ class GitExecTest extends \PHPUnit_Framework_TestCase
     /**
      * Exec a sert of shell commands
      *
-     * @return void
+     * @return array
      **/
     private static function execInDir(array $cmds)
     {

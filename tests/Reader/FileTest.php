@@ -3,7 +3,7 @@
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\File as FileReader;
 
-class FileTest extends \PHPUnit_Framework_TestCase
+class FileTest extends \PHPUnit\Framework\TestCase
 {
     public function testRead()
     {
@@ -13,6 +13,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         $versioner = new Versioner($readers);
 
-        $this->assertEquals('5.4.3', $versioner->get($directory));
+        self::assertEquals('5.4.3', $versioner->get($directory));
     }
 }

@@ -6,7 +6,7 @@ use Naneau\ProjectVersioner\Reader\Finder\Contents as ContentsReader;
 
 use Symfony\Component\Finder\Finder;
 
-class FinderTest extends \PHPUnit_Framework_TestCase
+class FinderTest extends \PHPUnit\Framework\TestCase
 {
     public function testMtime()
     {
@@ -18,14 +18,14 @@ class FinderTest extends \PHPUnit_Framework_TestCase
         $time = time();
         touch($directory . '/DirectoryOne/FileFour.txt', $time);
 
-        $this->assertEquals($time, $versioner->get($directory));
+        self::assertEquals($time, $versioner->get($directory));
     }
 
     public function testContents()
     {
         $versioner = new Versioner(array(new ContentsReader('*.php')));
 
-        $this->assertEquals(
+        self::assertEquals(
             'db9d80',
             $versioner->get(
                 __DIR__ . '/../projects/finder'
@@ -43,7 +43,7 @@ class FinderTest extends \PHPUnit_Framework_TestCase
         $time = time();
         touch($directory . '/DirectoryOne/FileFour.txt', $time);
 
-        $this->assertEquals($time, $versioner->get($directory));
+        self::assertEquals($time, $versioner->get($directory));
     }
 
     public function testEmptyNamesWithFinder()
@@ -64,8 +64,8 @@ class FinderTest extends \PHPUnit_Framework_TestCase
         touch($directory . '/DirectoryOne/FileThree.php', $timeThree);
         touch($directory . '/DirectoryOne/FileFour.txt', $timeFour);
 
-        $this->assertEquals($timeThree, $versionerPhp->get($directory));
-        $this->assertEquals($timeFour, $versionerTxt->get($directory));
+        self::assertEquals($timeThree, $versionerPhp->get($directory));
+        self::assertEquals($timeFour, $versionerTxt->get($directory));
     }
 
     public function testNamesAndFinder()
@@ -82,6 +82,6 @@ class FinderTest extends \PHPUnit_Framework_TestCase
         touch($directory . '/DirectoryOne/FileThree.php', $timeThree);
         touch($directory . '/DirectoryOne/FileFour.txt', $timeFour);
 
-        $this->assertEquals($timeThree, $versioner->get($directory));
+        self::assertEquals($timeThree, $versioner->get($directory));
     }
 }
