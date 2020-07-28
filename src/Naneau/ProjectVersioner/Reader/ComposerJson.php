@@ -10,7 +10,6 @@ namespace Naneau\ProjectVersioner\Reader;
 
 use Naneau\ProjectVersioner\ReaderInterface;
 
-use \RuntimeException;
 use \stdClass;
 
 /**
@@ -43,8 +42,8 @@ class ComposerJson implements ReaderInterface
         $json = json_decode($json);
         if (!($json instanceof stdClass) || empty($json->version)) {
             return false;
-        } 
+        }
 
-        return trim($json->version);        
+        return trim($json->version);
     }
 }
