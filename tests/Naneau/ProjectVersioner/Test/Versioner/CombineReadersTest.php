@@ -1,4 +1,5 @@
 <?php
+namespace Naneau\ProjectVersioner\Test\Versioner;
 
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\File as FileReader;
@@ -21,7 +22,7 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             'v2.5.4',
             $versioner->get(
-                __DIR__ . '/../projects/composer-file/'
+                __DIR__ . '/../../../../projects/composer-file/'
             )
         );
     }
@@ -39,7 +40,7 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             '5.4.3',
             $versioner->get(
-                __DIR__ . '/../projects/composer-file/'
+                __DIR__ . '/../../../../projects/composer-file/'
             )
         );
     }
@@ -57,7 +58,7 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             'v2.5.4_aa1f22_5.4.3',
             $versioner->getCombined(
-                __DIR__ . '/../projects/composer-file/',
+                __DIR__ . '/../../../../projects/composer-file/',
                 '_' // use _ for separator
             )
         );
@@ -75,7 +76,7 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             '5.4.3-v2.5.4-aa1f22',
             $versioner->getCombined(
-                __DIR__ . '/../projects/composer-file/'
+                __DIR__ . '/../../../../projects/composer-file/'
             )
         );
     }
@@ -89,7 +90,7 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
             array(new FileReader('VERSION'))
         );
         self::assertTrue(
-            $versioner->has(__DIR__ . '/../projects/composer-file/')
+            $versioner->has(__DIR__ . '/../../../../projects/composer-file/')
         );
 
         // Should not have a version
@@ -97,7 +98,7 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
             array(new FileReader('FOO'))
         );
         self::assertFalse(
-            $versioner->has(__DIR__ . '/../projects/composer-file/')
+            $versioner->has(__DIR__ . '/../../../../projects/composer-file/')
         );
     }
 }

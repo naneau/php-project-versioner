@@ -1,4 +1,5 @@
 <?php
+namespace Naneau\ProjectVersioner\Test\Reader;
 
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Finder\MTime as MTimeReader;
@@ -10,7 +11,7 @@ class FinderTest extends \PHPUnit\Framework\TestCase
 {
     public function testMtime()
     {
-        $directory = __DIR__ . '/../projects/finder';
+        $directory = __DIR__ . '/../../../../projects/finder';
 
         $versioner = new Versioner(array(new MTimeReader('*.txt')));
 
@@ -28,14 +29,14 @@ class FinderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(
             'db9d80',
             $versioner->get(
-                __DIR__ . '/../projects/finder'
+                __DIR__ . '/../../../../projects/finder'
             )
         );
     }
 
     public function testEmptyNames()
     {
-        $directory = __DIR__ . '/../projects/finder';
+        $directory = __DIR__ . '/../../../../projects/finder';
 
         $versioner = new Versioner(array(new MTimeReader()));
 
@@ -48,7 +49,7 @@ class FinderTest extends \PHPUnit\Framework\TestCase
 
     public function testEmptyNamesWithFinder()
     {
-        $directory = __DIR__ . '/../projects/finder';
+        $directory = __DIR__ . '/../../../../projects/finder';
 
         $finderTxt = new Finder;
         $finderTxt->name('*.txt');
@@ -70,7 +71,7 @@ class FinderTest extends \PHPUnit\Framework\TestCase
 
     public function testNamesAndFinder()
     {
-        $directory = __DIR__ . '/../projects/finder';
+        $directory = __DIR__ . '/../../../../projects/finder';
 
         $finder = new Finder;
         $finder->name('*.txt');

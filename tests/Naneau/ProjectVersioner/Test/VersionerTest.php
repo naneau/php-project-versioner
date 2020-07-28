@@ -1,4 +1,5 @@
 <?php
+namespace Naneau\ProjectVersioner\Test;
 
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Finder\MTime as MTimeReader;

@@ -11,7 +11,8 @@
 
     "autoload": {
         "psr-4": {
-            "Naneau\\ProjectVersioner\\": "src/Naneau/ProjectVersioner/"
+            "Naneau\\ProjectVersioner\\": "src/Naneau/ProjectVersioner/",
+            "Naneau\\ProjectVersioner\\Test\\": "tests/Naneau/ProjectVersioner/Test"
         }
     },
 

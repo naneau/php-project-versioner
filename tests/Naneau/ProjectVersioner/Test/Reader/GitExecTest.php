@@ -1,4 +1,5 @@
 <?php
+namespace Naneau\ProjectVersioner\Test\Reader;
 
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Git\Commit\Exec as GitCommitExecReader;
@@ -130,7 +131,7 @@ class GitExecTest extends \PHPUnit\Framework\TestCase
             $return = 0;
             exec($inflectedCmd, $output, $return);
             if ($return !== 0) {
-                throw new RuntimeException(sprintf(
+                throw new \RuntimeException(sprintf(
                     'Could not init git: "%s" returned %d, %s',
                     $inflectedCmd,
                     $return,
@@ -150,6 +151,6 @@ class GitExecTest extends \PHPUnit\Framework\TestCase
      **/
     private static function getDirectory()
     {
-        return __DIR__ . '/../projects/git';
+        return __DIR__ . '/../../../../projects/git';
     }
 }

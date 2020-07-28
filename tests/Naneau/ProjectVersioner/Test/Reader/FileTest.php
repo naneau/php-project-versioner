@@ -1,4 +1,5 @@
 <?php
+namespace Naneau\ProjectVersioner\Test\Reader;
 
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\File as FileReader;
@@ -7,7 +8,7 @@ class FileTest extends \PHPUnit\Framework\TestCase
 {
     public function testRead()
     {
-        $directory = __DIR__ . '/../projects/file';
+        $directory = __DIR__ . '/../../../../projects/file';
 
         $readers = array(new FileReader('VERSION'));
 

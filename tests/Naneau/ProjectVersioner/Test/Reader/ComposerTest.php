@@ -1,4 +1,5 @@
 <?php
+namespace Naneau\ProjectVersioner\Test\Reader;
 
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Composer as ComposerReader;
@@ -9,7 +10,7 @@ class ComposerTest extends \PHPUnit\Framework\TestCase
 {
     public function testRead()
     {
-        $directory = __DIR__ . '/../projects/composer';
+        $directory = __DIR__ . '/../../../../projects/composer';
 
         $readers = array(new ComposerReader);
 
@@ -20,7 +21,7 @@ class ComposerTest extends \PHPUnit\Framework\TestCase
 
     public function testPackageRead()
     {
-        $directory = __DIR__ . '/../projects/composer';
+        $directory = __DIR__ . '/../../../../projects/composer';
 
         $readers = array(new ComposerPackageReader('symfony/filesystem'));
 
@@ -31,7 +32,7 @@ class ComposerTest extends \PHPUnit\Framework\TestCase
 
     public function testComposerJsonRead()
     {
-        $directory = __DIR__ . '/../projects/composer';
+        $directory = __DIR__ . '/../../../../projects/composer';
 
         $readers = array(new ComposerJsonReader);
         $versioner = new Versioner($readers);
