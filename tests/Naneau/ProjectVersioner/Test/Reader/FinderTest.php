@@ -9,11 +9,11 @@ use Symfony\Component\Finder\Finder;
 
 class FinderTest extends \PHPUnit\Framework\TestCase
 {
-    public function testMtime()
+    public function testMtime(): void
     {
         $directory = __DIR__ . '/../../../../projects/finder';
 
-        $versioner = new Versioner(array(new MTimeReader('*.txt')));
+        $versioner = new Versioner([new MTimeReader('*.txt')]);
 
         // Set the time to now for one  of the files
         $time = time();
@@ -22,9 +22,9 @@ class FinderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($time, $versioner->get($directory));
     }
 
-    public function testContents()
+    public function testContents(): void
     {
-        $versioner = new Versioner(array(new ContentsReader('*.php')));
+        $versioner = new Versioner([new ContentsReader('*.php')]);
 
         self::assertEquals(
             'db9d80',
@@ -34,11 +34,11 @@ class FinderTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testEmptyNames()
+    public function testEmptyNames(): void
     {
         $directory = __DIR__ . '/../../../../projects/finder';
 
-        $versioner = new Versioner(array(new MTimeReader()));
+        $versioner = new Versioner([new MTimeReader()]);
 
         // Set the time to now for one  of the files
         $time = time();
@@ -47,17 +47,17 @@ class FinderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($time, $versioner->get($directory));
     }
 
-    public function testEmptyNamesWithFinder()
+    public function testEmptyNamesWithFinder(): void
     {
         $directory = __DIR__ . '/../../../../projects/finder';
 
         $finderTxt = new Finder;
         $finderTxt->name('*.txt');
-        $versionerTxt = new Versioner(array(new MTimeReader(null, $finderTxt)));
+        $versionerTxt = new Versioner([new MTimeReader(null, $finderTxt)]);
 
         $finderPhp = new Finder;
         $finderPhp->name('*.php');
-        $versionerPhp = new Versioner(array(new MTimeReader(null, $finderPhp)));
+        $versionerPhp = new Versioner([new MTimeReader(null, $finderPhp)]);
 
         $timeThree = time();
         $timeFour = $timeThree - 10;
@@ -69,13 +69,13 @@ class FinderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($timeFour, $versionerTxt->get($directory));
     }
 
-    public function testNamesAndFinder()
+    public function testNamesAndFinder(): void
     {
         $directory = __DIR__ . '/../../../../projects/finder';
 
         $finder = new Finder;
         $finder->name('*.txt');
-        $versioner = new Versioner(array(new MTimeReader('*.php', $finder)));
+        $versioner = new Versioner([new MTimeReader('*.php', $finder)]);
 
         $timeThree = time();
         $timeFour = $timeThree - 10;

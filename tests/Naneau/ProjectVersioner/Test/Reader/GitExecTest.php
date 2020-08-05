@@ -10,71 +10,63 @@ class GitExecTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test reading of latest commit
-     *
-     * @return void
-     **/
-    public function testShortCommitRead()
+     */
+    public function testShortCommitRead(): void
     {
-        $versionOutput = self::execInDir(array('git rev-parse --short HEAD'));
+        $versionOutput = self::execInDir(['git rev-parse --short HEAD']);
         $version = $versionOutput[0];
 
-        $versioner = new Versioner(array(new GitCommitExecReader));
+        $versioner = new Versioner([new GitCommitExecReader]);
 
         self::assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
     /**
      * Test reading of latest commit
-     *
-     * @return void
-     **/
-    public function testLongCommitRead()
+     */
+    public function testLongCommitRead(): void
     {
-        $versionOutput = self::execInDir(array('git rev-parse HEAD'));
+        $versionOutput = self::execInDir(['git rev-parse HEAD']);
         $version = $versionOutput[0];
 
-        $versioner = new Versioner(array(new GitCommitExecReader(false)));
+        $versioner = new Versioner([new GitCommitExecReader(false)]);
 
         self::assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
     /**
      * Test reading of latest commit
-     *
-     * @return void
-     **/
-    public function testDescribeRead()
+     */
+    public function testDescribeRead(): void
     {
-        $versionOutput = self::execInDir(array('git describe'));
+        $versionOutput = self::execInDir(['git describe']);
         $version = $versionOutput[0];
 
-        $versioner = new Versioner(array(new GitDescribeExecReader));
+        $versioner = new Versioner([new GitDescribeExecReader]);
 
         self::assertEquals($version, $versioner->get(self::getDirectory()));
     }
 
-    public function testTagRead()
+    public function testTagRead(): void
     {
-        $versioner = new Versioner(array(new GitTagExecReader));
+        $versioner = new Versioner([new GitTagExecReader]);
         self::assertEquals('0.0.2', $versioner->get(self::getDirectory()));
     }
 
     /**
      * Set up fixtures
-     *
-     * @return void
-     **/
+     */
     public function setUp(): void
     {
-        self::execWithDir(array('rm -rf %s', 'mkdir %s'));
-        self::execInDir(array(
+        self::execWithDir(['rm -rf %s', 'mkdir %s']);
+        self::execInDir([
             'touch testfile',
             'git init'
-        ));
+        ]);
 
         // Add commits, with matching tags
         for ($x = 0; $x < 3; $x++) {
-            self::execInDir(array(
+            self::execInDir([
 
                 // Contained in tag
                 sprintf('touch test.%d', $x),
@@ -86,28 +78,27 @@ class GitExecTest extends \PHPUnit\Framework\TestCase
                 sprintf('touch test.%d.notag', $x),
                 sprintf('git add test.%d.notag', $x),
                 sprintf('git commit -m "commit %d no tag"', $x)
-            ));
+            ]);
         }
     }
 
     /**
      * Tear down fixtures
-     *
-     * @return void
-     **/
+     */
     public function tearDown(): void
     {
-        self::execWithDir(array('rm -rf %s'));
+        self::execWithDir(['rm -rf %s']);
     }
 
     /**
      * Exec a sert of shell commands
      *
-     * @return array
-     **/
-    private static function execInDir(array $cmds)
+     * @param string[] $cmds
+     * @return string[]
+     */
+    private static function execInDir(array $cmds): array
     {
-        foreach($cmds as $key => $cmd) {
+        foreach ($cmds as $key => $cmd) {
             $cmds[$key] = 'cd %s && ' . $cmd;
         }
         return self::execWithDir($cmds);
@@ -116,18 +107,18 @@ class GitExecTest extends \PHPUnit\Framework\TestCase
     /**
      * Exec a bunch of commands with the test directory given
      *
-     * @param array $cmds
-     * @return array output from latest command
-     **/
-    private static function execWithDir(array $cmds)
+     * @param string[] $cmds
+     * @return string[] output from latest command
+     */
+    private static function execWithDir(array $cmds): array
     {
-        foreach($cmds as $cmd) {
+        foreach ($cmds as $cmd) {
             $inflectedCmd = sprintf(
                 $cmd,
                 escapeshellarg(self::getDirectory())
             );
 
-            $output = array();
+            $output = [];
             $return = 0;
             exec($inflectedCmd, $output, $return);
             if ($return !== 0) {
@@ -141,15 +132,13 @@ class GitExecTest extends \PHPUnit\Framework\TestCase
         }
 
         // Return latest output
-        return $output;
+        return $output ?? [];
     }
 
     /**
      * Get git tests directory
-     *
-     * @return string
-     **/
-    private static function getDirectory()
+     */
+    private static function getDirectory(): string
     {
         return __DIR__ . '/../../../../projects/git';
     }

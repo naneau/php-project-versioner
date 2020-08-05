@@ -6,16 +6,15 @@ use Naneau\ProjectVersioner\Reader\File as FileReader;
 use Naneau\ProjectVersioner\Reader\Composer as ComposerReader;
 use Naneau\ProjectVersioner\Reader\ComposerPackage as ComposerPackageReader;
 
-
 class CombineReadersTest extends \PHPUnit\Framework\TestCase
 {
-    public function testComposerFirst()
+    public function testComposerFirst(): void
     {
-        $readers = array(
+        $readers = [
             new ComposerPackageReader('symfony/filesystem'),
             new ComposerReader(),
             new FileReader('VERSION')
-        );
+        ];
 
         $versioner = new Versioner($readers);
 
@@ -27,13 +26,13 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testFileFirst()
+    public function testFileFirst(): void
     {
-        $readers = array(
+        $readers = [
             new FileReader('VERSION'),
             new ComposerPackageReader('symfony/filesystem'),
             new ComposerReader()
-        );
+        ];
 
         $versioner = new Versioner($readers);
 
@@ -45,13 +44,13 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testComposerFirstWithCombine()
+    public function testComposerFirstWithCombine(): void
     {
-        $readers = array(
+        $readers = [
             new ComposerPackageReader('symfony/filesystem'),
             new ComposerReader(),
             new FileReader('VERSION')
-        );
+        ];
 
         $versioner = new Versioner($readers);
 
@@ -64,13 +63,13 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testFileFirstWithCombine()
+    public function testFileFirstWithCombine(): void
     {
-        $readers = array(
+        $readers = [
             new FileReader('VERSION'),
             new ComposerPackageReader('symfony/filesystem'),
             new ComposerReader()
-        );
+        ];
         $versioner = new Versioner($readers);
 
         self::assertEquals(
@@ -81,13 +80,13 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testHasAVersion()
+    public function testHasAVersion(): void
     {
         $versioner = new Versioner;
 
         // This one should have a version
         $versioner->setReaders(
-            array(new FileReader('VERSION'))
+            [new FileReader('VERSION')]
         );
         self::assertTrue(
             $versioner->has(__DIR__ . '/../../../../projects/composer-file/')
@@ -95,7 +94,7 @@ class CombineReadersTest extends \PHPUnit\Framework\TestCase
 
         // Should not have a version
         $versioner->setReaders(
-            array(new FileReader('FOO'))
+            [new FileReader('FOO')]
         );
         self::assertFalse(
             $versioner->has(__DIR__ . '/../../../../projects/composer-file/')

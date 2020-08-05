@@ -1,30 +1,21 @@
 <?php
-/**
- * Exec.php
- *
- * @package         ProjectVersioner
- * @subpackage      Reader
- */
-
 namespace Naneau\ProjectVersioner\Reader\Git;
 
 use Naneau\ProjectVersioner\ReaderInterface;
+
+use RuntimeException;
 
 /**
  * Exec
  *
  * Base class for exec based git reading
- *
- * @category        Naneau
- * @package         ProjectVersioner
- * @subpackage      Reader
  */
 abstract class Exec implements ReaderInterface
 {
     /**
      * {@inheritDoc}
-     **/
-    public function canRead($directory)
+     */
+    public function canRead(string $directory): bool
     {
         return $this->canExec(
             $this->getCommandForDirectory($directory),
@@ -34,8 +25,8 @@ abstract class Exec implements ReaderInterface
 
     /**
      * {@inheritDoc}
-     **/
-    public function read($directory)
+     */
+    public function read(string $directory)
     {
         return $this->exec(
             $this->getCommandForDirectory($directory)
@@ -44,20 +35,13 @@ abstract class Exec implements ReaderInterface
 
     /**
      * Get the command for a directory
-     *
-     * @param  string $directory
-     * @return string
-     **/
-    abstract protected function getCommandForDirectory($directory);
+     */
+    abstract protected function getCommandForDirectory(string $directory): string;
 
     /**
      * Can a git command be executed?
-     *
-     * @param  string $command
-     * @param  string $directory
-     * @return void
-     **/
-    private function canExec($command, $directory)
+     */
+    private function canExec(string $command, string $directory): bool
     {
         // We rely on exec, so it needs to exist
         if (!function_exists('exec')) {
@@ -70,7 +54,7 @@ abstract class Exec implements ReaderInterface
         }
 
         // Try to exec()
-        $output = array();
+        $output = [];
         $return = 0;
         @exec($command, $output, $return);
 
@@ -80,13 +64,10 @@ abstract class Exec implements ReaderInterface
 
     /**
      * Execute a git command and return first line of output
-     *
-     * @param  string $command
-     * @return string
-     **/
-    private function exec($command)
+     */
+    private function exec(string $command): string
     {
-        $output = array();
+        $output = [];
         $return = 0;
 
         // Try to find last commit hash

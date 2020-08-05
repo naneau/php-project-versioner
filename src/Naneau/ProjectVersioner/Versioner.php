@@ -1,11 +1,4 @@
 <?php
-/**
- * Versioner.php
- *
- * @package         ProjectVersioner
- * @subpackage      Versioner
- */
-
 namespace Naneau\ProjectVersioner;
 
 use Naneau\ProjectVersioner\ReaderInterface as Reader;
@@ -17,9 +10,6 @@ use \RuntimeException;
  *
  * Uses a set of readers to fetch versions from directories
  *
- * @category        Naneau
- * @package         ProjectVersioner
- * @subpackage      Versioner
  */
 class Versioner
 {
@@ -27,16 +17,15 @@ class Versioner
      * The readers
      *
      * @var Reader[]
-     **/
+     */
     private $readers;
 
     /**
      * Constructor
      *
      * @param  Reader[] $readers
-     * @return void
-     **/
-    public function __construct(array $readers = array())
+     */
+    public function __construct(array $readers = [])
     {
         $this->setReaders($readers);
     }
@@ -44,10 +33,9 @@ class Versioner
     /**
      * Get the version for a directory
      *
-     * @param  string $directory
-     * @return string
-     **/
-    public function get($directory)
+     * @return string|int|null
+     */
+    public function get(string $directory)
     {
         foreach ($this->getReaders() as $reader) {
             if ($reader->canRead($directory)) {
@@ -68,14 +56,10 @@ class Versioner
      *
      * Version will be considered "found" if at least one versioner returns
      * output.
-     *
-     * @param  string $directory
-     * @param  string $separator
-     * @return string
-     **/
-    public function getCombined($directory, $separator = '-')
+     */
+    public function getCombined(string $directory, string $separator = '-'): string
     {
-        $found = array();
+        $found = [];
         foreach ($this->getReaders() as $reader) {
             if ($reader->canRead($directory)) {
                 $found[] = $reader->read($directory);
@@ -94,11 +78,8 @@ class Versioner
 
     /**
      * Does a directory have a version?
-     *
-     * @param string $directory
-     * @return bool
-     **/
-    public function has($directory)
+     */
+    public function has(string $directory): bool
     {
         foreach ($this->getReaders() as $reader) {
             if ($reader->canRead($directory)) {
@@ -114,7 +95,7 @@ class Versioner
      *
      * @return Reader[]
      */
-    public function getReaders()
+    public function getReaders(): array
     {
         return $this->readers;
     }
@@ -122,10 +103,9 @@ class Versioner
     /**
      * Set the set of readers
      *
-     * @param  Reader[]  $readers
-     * @return Versioner
+     * @param Reader[] $readers
      */
-    public function setReaders(array $readers)
+    public function setReaders(array $readers): self
     {
         $this->readers = $readers;
 
@@ -134,11 +114,8 @@ class Versioner
 
     /**
      * Add a reader
-     *
-     * @param  Reader[]  $reader
-     * @return Versioner
      */
-    public function addReader(Reader $reader)
+    public function addReader(Reader $reader): self
     {
         $this->readers[] = $reader;
 

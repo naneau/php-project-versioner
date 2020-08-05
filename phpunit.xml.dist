@@ -1,15 +1,14 @@
 <phpunit
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
-         backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
-         cacheTokens="false"
-         colors="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/8.5/phpunit.xsd"
+        backupGlobals="false"
+        backupStaticAttributes="false"
+        bootstrap="vendor/autoload.php"
+        colors="true"
          >
 
     <testsuites>
-        <testsuite name="ProjectVersioner Test Squite">
+        <testsuite name="ProjectVersioner Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

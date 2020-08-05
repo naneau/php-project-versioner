@@ -1,37 +1,25 @@
 <?php
-/**
- * MTime.php
- *
- * @package         ProjectVersioner
- * @subpackage      Reader
- */
-
 namespace Naneau\ProjectVersioner\Reader\Finder;
 
 /**
  * MTime
  *
  * Uses the highest mtime from a finder as a version
- *
- * @category        Naneau
- * @package         ProjectVersioner
- * @subpackage      Reader
  */
 class MTime extends Finder
 {
     /**
      * {@inheritdoc}
-     **/
-    public function read($directory)
+     */
+    public function read(string $directory)
     {
         $highest = 0;
         foreach ($this->getFinder() as $file) {
-
             $mtime = filemtime(
                 $file->getPath()
                 . DIRECTORY_SEPARATOR . $file->getFilename()
             );
-            if ($mtime > $highest) {
+            if (is_int($mtime) && $mtime > $highest) {
                 $highest = $mtime;
             }
         }

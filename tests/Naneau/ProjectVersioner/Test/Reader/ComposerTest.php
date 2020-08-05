@@ -8,33 +8,34 @@ use Naneau\ProjectVersioner\Reader\ComposerJson as ComposerJsonReader;
 
 class ComposerTest extends \PHPUnit\Framework\TestCase
 {
-    public function testRead()
+    public function testRead(): void
     {
         $directory = __DIR__ . '/../../../../projects/composer';
 
-        $readers = array(new ComposerReader);
+        $readers = [new ComposerReader];
 
         $versioner = new Versioner($readers);
 
         self::assertEquals('aa1f22', $versioner->get($directory));
     }
 
-    public function testPackageRead()
+    public function testPackageRead(): void
     {
         $directory = __DIR__ . '/../../../../projects/composer';
 
-        $readers = array(new ComposerPackageReader('symfony/filesystem'));
+        $readers = [new ComposerPackageReader('symfony/filesystem')];
 
         $versioner = new Versioner($readers);
 
         self::assertEquals('v2.5.4', $versioner->get($directory));
     }
 
-    public function testComposerJsonRead()
+    public function testComposerJsonRead(): void
     {
         $directory = __DIR__ . '/../../../../projects/composer';
 
-        $readers = array(new ComposerJsonReader);
+        $readers = [new ComposerJsonReader];
+
         $versioner = new Versioner($readers);
 
         self::assertEquals('1.0.0', $versioner->get($directory));

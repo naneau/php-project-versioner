@@ -1,11 +1,4 @@
 <?php
-/**
- * Finder.php
- *
- * @package         ProjectVersioner
- * @subpackage      Reader
- */
-
 namespace Naneau\ProjectVersioner\Reader\Finder;
 
 use Naneau\ProjectVersioner\ReaderInterface;
@@ -16,10 +9,6 @@ use Symfony\Component\Finder\Finder as SfFinder;
  * Finder
  *
  * Base class for finder based readers
- *
- * @category        Naneau
- * @package         ProjectVersioner
- * @subpackage      Reader
  */
 abstract class Finder implements ReaderInterface
 {
@@ -30,14 +19,7 @@ abstract class Finder implements ReaderInterface
      */
     private $finder;
 
-    /**
-     * Constructor
-     *
-     * @param  string   $name   limiting names
-     * @param  SfFinder $finder
-     * @return void
-     **/
-    public function __construct($name = null, SfFinder $finder = null)
+    public function __construct(?string $name = null, ?SfFinder $finder = null)
     {
         // Create finder if not given
         if ($finder === null) {
@@ -58,37 +40,28 @@ abstract class Finder implements ReaderInterface
 
     /**
      * {@inheritdoc}
-     **/
-    public function canRead($directory)
+     */
+    public function canRead(string $directory): bool
     {
         // Update finder directory
         $this->getFinder()->in($directory);
 
         // If at least one file/dir can be found, assume we can read
-        foreach ($this->getFinder() as $file) {
-            return true;
-        }
-
-        return false;
+        return $this->getFinder()->hasResults();
     }
 
     /**
      * Get the finder
-     *
-     * @return SfFinder
      */
-    public function getFinder()
+    public function getFinder(): SfFinder
     {
         return $this->finder;
     }
 
     /**
      * Set the finder
-     *
-     * @param  SfFinder $finder
-     * @return SfFinder
      */
-    public function setFinder(SfFinder $finder)
+    public function setFinder(SfFinder $finder): self
     {
         $this->finder = $finder;
 

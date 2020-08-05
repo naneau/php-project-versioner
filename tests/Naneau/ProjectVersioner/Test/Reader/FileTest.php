@@ -6,11 +6,11 @@ use Naneau\ProjectVersioner\Reader\File as FileReader;
 
 class FileTest extends \PHPUnit\Framework\TestCase
 {
-    public function testRead()
+    public function testRead(): void
     {
         $directory = __DIR__ . '/../../../../projects/file';
 
-        $readers = array(new FileReader('VERSION'));
+        $readers = [new FileReader('VERSION')];
 
         $versioner = new Versioner($readers);
 

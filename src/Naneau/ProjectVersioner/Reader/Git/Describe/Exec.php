@@ -1,11 +1,4 @@
 <?php
-/**
- * Exec.php
- *
- * @package         ProjectVersioner
- * @subpackage      Reader
- */
-
 namespace Naneau\ProjectVersioner\Reader\Git\Describe;
 
 use Naneau\ProjectVersioner\Reader\Git\Exec as GitExec;
@@ -20,10 +13,6 @@ use Naneau\ProjectVersioner\Reader\Git\Exec as GitExec;
  * the latest being gd504031
  *
  * @see http://git-scm.com/docs/git-describe
- *
- * @category        Naneau
- * @package         ProjectVersioner
- * @subpackage      Reader
  */
 class Exec extends GitExec
 {
@@ -32,8 +21,8 @@ class Exec extends GitExec
      *
      * @param  string $directory
      * @return string
-     **/
-    protected function getCommandForDirectory($directory)
+     */
+    protected function getCommandForDirectory(string $directory): string
     {
         return sprintf(
             'cd %s && git describe',

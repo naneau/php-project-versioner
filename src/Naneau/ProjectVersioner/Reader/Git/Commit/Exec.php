@@ -1,11 +1,4 @@
 <?php
-/**
- * Exec.php
- *
- * @package         ProjectVersioner
- * @subpackage      Reader
- */
-
 namespace Naneau\ProjectVersioner\Reader\Git\Commit;
 
 use Naneau\ProjectVersioner\Reader\Git\Exec as GitExec;
@@ -16,10 +9,6 @@ use Naneau\ProjectVersioner\Reader\Git\Exec as GitExec;
  * Reads the latest commit (short) hash from a git repository
  *
  * Example: gd504031
- *
- * @category        Naneau
- * @package         ProjectVersioner
- * @subpackage      Reader
  */
 class Exec extends GitExec
 {
@@ -27,37 +16,26 @@ class Exec extends GitExec
      * Use short hash?
      *
      * @var bool
-     **/
+     */
     private $short = true;
 
-    /**
-     * Constructor
-     *
-     * @param  bool $short
-     * @return void
-     **/
-    public function __construct($short = true)
+    public function __construct(bool $short = true)
     {
         $this->setShort($short);
     }
 
     /**
      * Get use short commit hash?
-     *
-     * @return bool
      */
-    public function getShort()
+    public function getShort(): bool
     {
         return $this->short;
     }
 
     /**
      * Set use short commit hash?
-     *
-     * @param  bool $short
-     * @return Exec
      */
-    public function setShort($short)
+    public function setShort(bool $short): self
     {
         $this->short = $short;
 
@@ -66,22 +44,19 @@ class Exec extends GitExec
 
     /**
      * Get command for directory
-     *
-     * @param  string $directory
-     * @return string
-     **/
-    protected function getCommandForDirectory($directory)
+     */
+    protected function getCommandForDirectory(string $directory): string
     {
         if ($this->getShort()) {
             return sprintf(
                 'cd %s && git rev-parse --short HEAD',
                 escapeshellarg($directory)
             );
-        } else {
-            return sprintf(
-                'cd %s && git rev-parse HEAD',
-                escapeshellarg($directory)
-            );
         }
+
+        return sprintf(
+            'cd %s && git rev-parse HEAD',
+            escapeshellarg($directory)
+        );
     }
 }

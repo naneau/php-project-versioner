@@ -1,8 +1,8 @@
 # PHP Project Versioner
 
-[![Latest Stable Version](https://poser.pugx.org/naneau/project-versioner/v/stable.svg)](https://packagist.org/packages/naneau/project-versioner)
-[![Build Status](https://travis-ci.org/naneau/php-project-versioner.svg?branch=master)](https://travis-ci.org/naneau/php-project-versioner)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/naneau/php-project-versioner/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/naneau/php-project-versioner/?branch=master)
+[![PHP checks](https://github.com/AngryBytes/php-project-versioner/workflows/PHP%20checks/badge.svg)](https://github.com/AngryBytes/php-project-versioner/actions?query=workflow%3A%22PHP+checks%22)
+
+**Note:** this is a fork of the original project as it appears to be abandoned.
 
 This is a simple tool to obtain "versions" for projects in PHP.
 
@@ -31,7 +31,7 @@ use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Git\Commit\Exec as GitCommitReader;
 
 // Create a versioner
-$versioner = new Versioner(array(new GitCommitReader));
+$versioner = new Versioner([new GitCommitReader]);
 
 // Short commit hash like "gd8587c8"
 $version = $versioner->get('/foo/bar');
@@ -46,7 +46,7 @@ use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Git\Tag\Exec as GitTagReader;
 
 // Create a versioner
-$versioner = new Versioner(array(new GitTagReader));
+$versioner = new Versioner([new GitTagReader]);
 
 // Last tag
 $version = $versioner->get('/foo/bar');
@@ -61,7 +61,7 @@ use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Git\Tag\Exec as GitTagReader;
 
 // Create a versioner
-$versioner = new Versioner(array(new GitTagReader));
+$versioner = new Versioner([new GitTagReader]);
 
 // Last tag + commit info, like 4.3.2-9-gd504031
 $version = $versioner->get('/foo/bar');
@@ -78,10 +78,10 @@ use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\File as FileReader;
 
 // Create a versioner
-$versioner = new Versioner(array(
+$versioner = new Versioner([
     // Reader for "VERSION" file
     new FileReader('VERSION')
-));
+]);
 
 // Retrieve version from versioner
 $version = $versioner->get('/foo/bar');
@@ -96,9 +96,9 @@ use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Finder\MTime as MTimeReader;
 
 // Create a versioner
-$versioner = new Versioner(array(
+$versioner = new Versioner([
     new MTimeReader('*.txt') // Look at all *.txt files
-));
+]);
 
 // Highest mtime, like 1410806782
 $version = $versioner->get('/foo/bar');
@@ -112,9 +112,9 @@ Using a different reader it is possible to use the *contents* of the files found
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Finder\Contents as ContentsReader;
 
-$versioner = new Versioner(array(
+$versioner = new Versioner([
     new ContentsReader('*.jpg')
-));
+]);
 
 // Short hash of file contents, like gd504031
 $version = $versioner->get('/foo/bar');
@@ -132,7 +132,7 @@ To look at all packages combined:
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\Composer as ComposerReader;
 
-$versioner = new Versioner(array(new ComposerReader));
+$versioner = new Versioner([new ComposerReader]);
 
 // Short hash like "ae9b8a"
 $version = $versioner->get('/foo/bar');
@@ -146,9 +146,9 @@ Or, looking for a specific package:
 use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\ComposerPackage as ComposerPackageReader;
 
-$versioner = new Versioner(array(
+$versioner = new Versioner([
     new ComposerPackageReader('symfony/filesystem')
-));
+]);
 
 // Composer Version (SemVer) like "v2.5.4"
 $version = $versioner->get('/foo/bar');
@@ -165,10 +165,10 @@ use Naneau\ProjectVersioner\Versioner;
 use Naneau\ProjectVersioner\Reader\ComposerPackage as ComposerPackageReader;
 use Naneau\ProjectVersioner\Reader\Git\Tag\Exec as GitTagReader;
 
-$versioner = new Versioner(array(
+$versioner = new Versioner([
     new ComposerPackageReader('symfony/filesystem'),
     new GitTagReader
-));
+]);
 
 // First version found
 $version = $versioner->get('/foo/bar');
